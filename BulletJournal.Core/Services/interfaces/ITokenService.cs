@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BulletJournal.Core.DTO;
+using BulletJournal.Core.Identity;
+
 
 namespace BulletJournal.Core.Services.interfaces
 {
-    interface ITokenService
+    public interface ITokenService
     {
+        LoginResponseDTO Execute(ApplicationUser user, RefreshToken refreshToken = null);
     }
 }
