@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BulletJournal.WebApi.Controllers
 {
+
+    //TODO: Перенести весь функционал в сервисы.
     [Route("[controller]/[action]")]
     public class AccountController:Controller
     {
@@ -52,6 +54,7 @@ namespace BulletJournal.WebApi.Controllers
             return BadRequest("Login failed.");
         }
 
+        //TODO: переработать регистрацию сделать привязку с Profile 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterDTO model)
         {
