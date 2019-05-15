@@ -10,5 +10,7 @@ namespace BulletJournal.Core.Services.interfaces
     {
         Task<Profile> GetProfileById(int id);
         Task RegisterProfile(Profile profile);
+        Task EditProfile(Profile profile);
+
     }
 }
