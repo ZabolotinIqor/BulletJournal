@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulletJournal.Core.EntityFramework;
 using BulletJournal.Core.Identity;
 using BulletJournal.Core.Services.implementations;
 using BulletJournal.Core.Services.interfaces;
@@ -28,13 +29,26 @@ namespace BulletJournal.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddMemoryCache();
+            services.AddResponseCompression();
+
+            services.AddScoped<IMarksService, MarksService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITokenService, TokenService>();
             var identityConnection = this.config.GetConnectionString("IdentityConnection");
+
             services.AddDbContext<UserDbContext>(opt => {
-                opt.UseSqlServer(identityConnection, opts => {
-                    opts.MigrationsAssembly("JWT");
-                });
+                var sqlConnectionString = config.GetConnectionString("AccountConnectionString");
+                opt.UseNpgsql(sqlConnectionString, o => o.MigrationsAssembly("BulletJournal.WebApi"));
             });
+            services.AddDbContext<BulletJournalDbContext>(opt => {
+                var sqlConnectionString = config.GetConnectionString("Default");
+                opt.UseNpgsql(sqlConnectionString, o => o.MigrationsAssembly("BulletJournal.WebApi"));
+            });
+
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -53,7 +67,7 @@ namespace BulletJournal.WebApi
                     ValidateLifetime = true
                 };
             });
-            services.AddMvc();
+
         }
 
     
@@ -66,9 +80,14 @@ namespace BulletJournal.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-
-            app.UseAuthentication();
-            app.UseMvc();
+            app.UseResponseCompression();
+            app.UseStaticFiles();
+            //app.UseAuthentication();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
         }
     }

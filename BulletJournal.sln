@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletJournal.WebApi", "BulletJournal.WebApi\BulletJournal.WebApi.csproj", "{1D913974-80DE-4B4C-846F-235CBF594141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulletJournal.WebApi", "BulletJournal.WebApi\BulletJournal.WebApi.csproj", "{1D913974-80DE-4B4C-846F-235CBF594141}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletJournal.Core", "BulletJournal.Core\BulletJournal.Core.csproj", "{93D458B2-AC02-4AD1-9135-AD9149AFCAAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulletJournal.Core", "BulletJournal.Core\BulletJournal.Core.csproj", "{93D458B2-AC02-4AD1-9135-AD9149AFCAAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DOCUMENTATION", "DOCUMENTATION", "{1197DF05-6CCC-4628-AAD6-9524EFFE2BB3}"
+	ProjectSection(SolutionItems) = preProject
+		DOC.txt = DOC.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
