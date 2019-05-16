@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BulletJournal.WebApi
 {
@@ -38,6 +39,13 @@ namespace BulletJournal.WebApi
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITokenService, TokenService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
+
             var identityConnection = this.config.GetConnectionString("IdentityConnection");
 
             services.AddDbContext<UserDbContext>(opt => {
@@ -82,6 +90,11 @@ namespace BulletJournal.WebApi
 
             app.UseResponseCompression();
             app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BulletJournal API");
+            });
             //app.UseAuthentication();
             app.UseMvc(routes => {
                 routes.MapRoute(
