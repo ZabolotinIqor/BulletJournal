@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BulletJournal.Core.DTO;
 using BulletJournal.Core.Models;
 
 namespace BulletJournal.Core.Services.interfaces
@@ -9,8 +10,8 @@ namespace BulletJournal.Core.Services.interfaces
     public interface IProfileService
     {
         Task<Profile> GetProfileById(int id);
-        Task RegisterProfile(Profile profile);
-        Task EditProfile(Profile profile);
+        Task<Profile> RegisterProfile(ProfileDTO profile);
+        Task<Profile> EditProfile(ProfileDTO profile, int profileId);
 
     }
 }

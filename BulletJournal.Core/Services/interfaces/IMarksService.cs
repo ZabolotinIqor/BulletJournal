@@ -10,7 +10,7 @@ namespace BulletJournal.Core.Services.interfaces
     public interface IMarksService
     {
         Task<IEnumerable<Marks>> GetAllMarks();
-        Task AddMark(MarkDTO marks);
+        Task<Marks> AddMark(MarkDTO marks);
 
     }
 }

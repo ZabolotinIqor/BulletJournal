@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulletJournal.Core.DTO;
 using BulletJournal.Core.EntityFramework;
 using BulletJournal.Core.Models;
 using BulletJournal.Core.Services.interfaces;
@@ -18,22 +19,36 @@ namespace BulletJournal.Core.Services.implementations
         {
             this.context = db;
         }
-        public async Task AddTask(ToDoTask task)
+        public async Task<ToDoTask> AddTask(ToDoTaskDTO task)
         {
-            await context.AddAsync(task);
+            var _task = new ToDoTask()
+            {
+                Title = task.Title,
+                Description = task.Description,
+                StartDate = DateTime.Now,
+                isCompleted = false,
+                EstimatedDate = task.EstimatedDate
+            };
+            await context.AddAsync(_task);
+            await context.SaveChangesAsync();
+            return _task;
         }
 
         public async Task DeleteTask(int id)
         {
             var _task = await context.Tasks.FirstOrDefaultAsync(p => p.Id == id);
             context.Tasks.Remove(_task);
+            await context.SaveChangesAsync();
         }
 
-        public async Task EditTask(ToDoTask task)
+        public async Task<ToDoTask> EditTask(ToDoTaskDTO task, int id)
         {
-            var _task = await context.Tasks.FirstOrDefaultAsync(p => p.Id == task.Id);
-            _task = task;
+            var _task = await context.Tasks.FirstOrDefaultAsync(p => p.Id == id);
+            _task.Title = task.Title;
+            _task.Description = task.Description;
+            _task.EstimatedDate = task.EstimatedDate;
             await context.SaveChangesAsync();
+            return _task;
         }
 
         public async Task<IEnumerable<ToDoTask>> GetAllTasks()

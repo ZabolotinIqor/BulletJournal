@@ -18,13 +18,12 @@ namespace BulletJournal.WebApi.Controllers
         {
             this.marksService = marksService;
         }
-        //TODO: refactor Mark model change to MarkDto
         [HttpPost("AddMark")]
-        public ActionResult AddMark([FromBody]MarkDTO marks)
+        public async Task<ActionResult> AddMark([FromBody]MarkDTO marks)
         {
             if (ModelState.IsValid)
             {
-                var result =  marksService.AddMark(marks);
+                var result =  await marksService.AddMark(marks);
                 if (result == null)
                 {
                     return NotFound();

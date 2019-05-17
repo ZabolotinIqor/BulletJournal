@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BulletJournal.Core.DTO;
 using BulletJournal.Core.EntityFramework;
 using BulletJournal.Core.Models;
 using BulletJournal.Core.Services.interfaces;
@@ -17,22 +18,32 @@ namespace BulletJournal.Core.Services.implementations
         {
             this.context = db;
         }
-        public async Task AddProject(Project project)
+        public async Task<Project> AddProject(ProjectDTO project)
         {
-            await context.AddAsync(project);
+            var proj = new Project()
+            {
+                Name = project.Name,
+                Description = project.Description
+            };
+            await context.AddAsync(proj);
+            await context.SaveChangesAsync();
+            return proj;
         }
 
         public async Task DeleteProject(int id)
         {
             var _project = await context.Projects.FirstOrDefaultAsync(proj => proj.Id == id);
             context.Projects.Remove(_project);
+            await context.SaveChangesAsync();
         }
 
-        public async Task EditProject(Project project)
+        public async Task<Project> EditProject(ProjectDTO project,int id)
         {
-            var _project = await context.Projects.FirstOrDefaultAsync(proj => proj.Id == project.Id);
-            _project = project;
+            var _project = await context.Projects.FirstOrDefaultAsync(proj => proj.Id == id);
+            _project.Name = project.Name;
+            _project.Description = project.Description;
             await context.SaveChangesAsync();
+            return _project;
         }
 
         public async Task<IEnumerable<Project>> GetAllProjects()

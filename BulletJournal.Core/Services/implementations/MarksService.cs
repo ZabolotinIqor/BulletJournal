@@ -20,13 +20,18 @@ namespace BulletJournal.Core.Services.implementations
             this.context = db;
         }
 
-        public async Task AddMark(MarkDTO marks)
+        public async Task<Marks> AddMark(MarkDTO marks)
         {
-            var mark = new Marks();
-            mark.Name = marks.Name;
-            mark.Description = marks.Description;
-            mark.Image = marks.Image;
+            var mark = new Marks()
+            {
+                Name = marks.Name,
+                Description = marks.Description,
+                Image = marks.Image
+
+            };
             await context.Markses.AddAsync(mark);
+            await context.SaveChangesAsync();
+            return mark;
         }
 
         public async Task<IEnumerable<Marks>> GetAllMarks()

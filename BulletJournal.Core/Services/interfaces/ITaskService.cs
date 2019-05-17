@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BulletJournal.Core.DTO;
 using BulletJournal.Core.Models;
 
 namespace BulletJournal.Core.Services.interfaces
@@ -11,8 +12,8 @@ namespace BulletJournal.Core.Services.interfaces
         Task<IEnumerable<ToDoTask>> GetAllTasks();
         Task<IEnumerable<ToDoTask>> GetTaskByDate(DateTime date);
         Task<IEnumerable<ToDoTask>> GetTasksByRangeDate(DateTime from, DateTime to);
-        Task AddTask(ToDoTask task);
-        Task EditTask(ToDoTask task);
+        Task<ToDoTask> AddTask(ToDoTaskDTO task);
+        Task<ToDoTask> EditTask(ToDoTaskDTO task,int id);
         Task DeleteTask(int id);
         Task<ToDoTask> GetTaskById(int id);
 

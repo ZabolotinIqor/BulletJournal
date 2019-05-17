@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using BulletJournal.Core.DTO;
 using BulletJournal.Core.EntityFramework;
 using BulletJournal.Core.Models;
 using BulletJournal.Core.Services.interfaces;
@@ -17,9 +18,9 @@ namespace BulletJournal.Core.Services.implementations
             this.context = db;
         }
 
-        public async Task EditProfile(Profile profile)
+        public async Task<Profile> EditProfile(ProfileDTO profile,int profileId)
         {
-                var _profile = await context.Profiles.FirstOrDefaultAsync(o => o.Id == profile.Id);
+                var _profile = await context.Profiles.FirstOrDefaultAsync(o => o.Id == profileId);
                 _profile.Adress = profile.Adress;
                 _profile.BirthDate = profile.BirthDate;
                 _profile.FathersName = profile.FathersName;
@@ -28,6 +29,7 @@ namespace BulletJournal.Core.Services.implementations
                 _profile.Surname = profile.Surname;
                 _profile.PhoneNumber = profile.PhoneNumber;
                 await context.SaveChangesAsync();
+                return _profile;
         }
 
         public async Task<Profile> GetProfileById(int id)
@@ -35,9 +37,21 @@ namespace BulletJournal.Core.Services.implementations
             return await context.Profiles.FirstOrDefaultAsync(profile => profile.Id == id);
         }
 
-        public async Task RegisterProfile(Profile profile)
+        public async Task<Profile> RegisterProfile(ProfileDTO profile)
         {
-            await context.Profiles.AddAsync(profile);
+            var prof = new Profile()
+            {
+                Name = profile.Name,
+                Surname = profile.Surname,
+                FathersName = profile.FathersName,
+                Gender = profile.Gender,
+                BirthDate = profile.BirthDate,
+                PhoneNumber = profile.PhoneNumber,
+                Adress = profile.Adress
+            };
+            await context.Profiles.AddAsync(prof);
+            await context.SaveChangesAsync();
+            return prof;
         }
 
 
