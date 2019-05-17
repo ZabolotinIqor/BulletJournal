@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 using BulletJournal.Core.DTO;
 using BulletJournal.Core.Identity;
 using BulletJournal.Core.Services.interfaces;
