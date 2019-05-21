@@ -1,11 +1,9 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BulletJournal.Core.DTO;
 using BulletJournal.Core.EntityFramework;
 using BulletJournal.Core.Models;
 using BulletJournal.Core.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace BulletJournal.Core.Services.implementations
 {
